@@ -1,0 +1,16 @@
+﻿@page
+@model Dantooine.Server.Areas.Identity.Pages.Account.PrivacyModel
+@{
+}
+
+
+<form method="post" asp-route-clientId="@Model.ClientId">
+    <div class="col-12 btn-group">
+        <div class="col-6">
+            <button id="accept-submit" type="submit" class="w-100 btn btn-lg btn-success" asp-page-handler="Accept" asp-route-clientId="@Model.ClientId">Accept</button>
+        </div>
+        <div class="col-6">
+            <button id="reject-submit" type="submit" class="w-100 btn btn-lg btn-danger" asp-page-handler="Reject">Reject</button>
+        </div>
+    </div>
+</form>
