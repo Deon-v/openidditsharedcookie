@@ -31,12 +31,23 @@ namespace Dantooine.BFF.Server.Controllers
         [HttpGet("GetIdData")]
         public async Task<IEnumerable<string>> GetIdData()
         {
-            var token = await HttpContext.GetTokenAsync(CookieAuthenticationDefaults.AuthenticationScheme, "access_token");
-            var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            try
+            {
+                var token = await HttpContext.GetTokenAsync(CookieAuthenticationDefaults.AuthenticationScheme, "access_token");
+                var client = _httpClientFactory.CreateClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            client.BaseAddress = new Uri("https://localhost:44319");
-            return await client.GetFromJsonAsync<List<string>>("api/DirectApi");
+                client.BaseAddress = new Uri("https://localhost:44319");
+                var result = await client.GetStringAsync("api/DirectApi");
+                var resultfe = await client.GetStringAsync("api/test/DirectApi");
+                return await client.GetFromJsonAsync<List<string>>("api/DirectApi");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
 
     }
